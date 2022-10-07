@@ -14,40 +14,44 @@ promo = 1
 hashy = 0
 argumentList = sys.argv
 serverName = argumentList[1]
-#serverName = '127.0.0.1'
+# serverName = '127.0.0.1'
 serverPort = 12009
 clientSocket = socket(AF_INET, SOCK_STREAM)
-clientSocket.connect((serverName,serverPort))
+clientSocket.connect((serverName, serverPort))
+
+
 def authentication():
 	global state
 	cauth = 1
-	while(cauth == 1 ):
+	while (cauth == 1):
 		username = raw_input("Username: ")
 		clientSocket.send(username.encode())
-		password = getpass.getpass(prompt = "Enter the Password: ")
+		password = getpass.getpass(prompt="Enter the Password: ")
 		clientSocket.send(password.encode())
 		conn = clientSocket.recv(1024)
-		if(conn == "success"):
+		if (conn == "success"):
 			state = 1
 			cauth = 0
 			print("Connection Authenticated")
-		else :
+		else:
 			state = 0
 			cauth = 1
 			print("Connection failed to Authenticate")
-			#clientSocket.close()
+			# clientSocket.close()
+
 
 def listt(modifiedSentence):
-	cmd="dir"
-	process = subprocess.Popen('ls', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	cmd = "dir"
+	process = subprocess.Popen(
+	    'ls', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	(result, error) = process.communicate()
 	rc = process.wait()
 	print(result)
-	
+
 
 def pathh(modifiedSentence):
 	pt = os.getcwd()
-        print(pt)
+	print(pt)
 
 def cdd(modifiedSentence):
 	os.chdir(modifiedSentence[1])
@@ -86,7 +90,7 @@ def gett(modifiedSentence):
 	b = int(modifiedSentence[2])
 	t = open(modifiedSentence[1], "wb+")
 	server3Name = argumentList[1]
-	#server3Name = '127.0.0.1'
+	# server3Name = '127.0.0.1'
 	server3Port = 12006
 	client3Socket = socket(AF_INET, SOCK_STREAM)
 	client3Socket.connect((server3Name,server3Port))
@@ -115,7 +119,7 @@ def putt(modifiedSentence):
 	b = os.path.getsize(modifiedSentence[1])
 	string = modifiedSentence[0] + ' ' + modifiedSentence[1] + ' ' + str(b)
 	server2Name = argumentList[1]
-	#server2Name = '127.0.0.1'
+	# server2Name = '127.0.0.1'
 	server2Port = 12003
 	client2Socket = socket(AF_INET, SOCK_STREAM)
 	client2Socket.connect((server2Name,server2Port))
@@ -154,7 +158,7 @@ def fuuun(sentence) :
 		if modifiedSentence[0] == "lisst":
 			try:
 				listt(modifiedSentence)
-        		except :
+        		except:
         	  		print(e)
 		if (modifiedSentence[0] == "help" or modifiedSentence[0] == "?"):
 			try:
@@ -201,9 +205,9 @@ def fuuun(sentence) :
         	  		print(e)
           		
 		elif modifiedSentence[0] == "mkdr":
-			try :
+			try:
 				mkdrr(modifiedSentence)	
-			except :
+			except:
           			print(e)	
 		elif modifiedSentence[0] == "renm":
 			try :
@@ -255,7 +259,7 @@ def fuuun(sentence) :
 		
 authentication()
 while(state == 1):
-	#clientSocket.connect((serverName,serverPort))
+	# clientSocket.connect((serverName,serverPort))
 	sentence = raw_input("ftp> ")
 	df = sentence.split()
 	si = len(df)
